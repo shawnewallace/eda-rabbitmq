@@ -36,8 +36,8 @@ namespace Core
 			  HostName = "equinox.local",
         Port = 5672,
         VirtualHost = "/", 
-        UserName = "shawn", 
-        Password = "altair6-"
+        UserName = "dev", 
+        Password = "password"
 			};
 			return factory;
 		}
