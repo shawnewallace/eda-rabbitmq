@@ -67,7 +67,7 @@ namespace Warehouse
 		{
 			var ready = JsonConvert.DeserializeObject<OrderReady>(message);
 			Console.Write(" [>>>>>>>>>>] Received Order Ready For Shipment message '{0}'...", ready.OrderId);
-			Thread.Sleep(15);
+			Thread.Sleep(15000);
 			IOrderShipped shipped = new OrderShipped { OrderId = ready.OrderId };
 			var orderMessage = JsonConvert.SerializeObject(ready);
 			var body = Encoding.UTF8.GetBytes(orderMessage);

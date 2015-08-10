@@ -31,7 +31,14 @@ namespace Core
 	{
 		protected static ConnectionFactory GetConnectionFactory()
 		{
-			var factory = new ConnectionFactory() { HostName = "localhost" };
+			var factory = new ConnectionFactory()
+			{
+			  HostName = "equinox.local",
+        Port = 5672,
+        VirtualHost = "/", 
+        UserName = "shawn", 
+        Password = "altair6-"
+			};
 			return factory;
 		}
 
