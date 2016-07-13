@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerCreator.cs" />
+    <Compile Include="NewCustomerEvent.cs" />
+    <Compile Include="OrderAcceptedEvent.cs" />
     <Compile Include="OrderCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

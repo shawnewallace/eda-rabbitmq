@@ -22,21 +22,25 @@ namespace SalesServiceClient
 
 			for (var i = 0; i < 100; i++)
 			{
-				IOrderAccepted order = new OrderAcceptedEvent();
-
-				order.CustomerId = Guid.NewGuid();
-				order.OrderId = Guid.NewGuid();
-				order.OrderItems = new List<OrderItem>
-				{
-					new OrderItem { Description = "Item One", ItemId = Guid.NewGuid(), Price = 100.21, Quantity = 4 },
-					new OrderItem { Description = "Item Two", ItemId = Guid.NewGuid(), Price = 19.99, Quantity = 6 },
-					new OrderItem { Description = "Item Three", ItemId = Guid.NewGuid(), Price = 5, Quantity = 1 }
-				};
-
-				service.Submit(order);
-				//Thread.Sleep(1000);
+			  var order = CreateNewSampleOrderAcceptedEvent();
+			  service.Submit(order);
 			}
 		}
+
+	  private static IOrderAccepted CreateNewSampleOrderAcceptedEvent()
+	  {
+	    IOrderAccepted order = new OrderAcceptedEvent();
+
+	    order.CustomerId = Guid.NewGuid();
+	    order.OrderId = Guid.NewGuid();
+	    order.OrderItems = new List<OrderItem>
+	    {
+	      new OrderItem {Description = "Item One", ItemId = Guid.NewGuid(), Price = 100.21, Quantity = 4},
+	      new OrderItem {Description = "Item Two", ItemId = Guid.NewGuid(), Price = 19.99, Quantity = 6},
+	      new OrderItem {Description = "Item Three", ItemId = Guid.NewGuid(), Price = 5, Quantity = 1}
+	    };
+	    return order;
+	  }
 	}
 
 }
