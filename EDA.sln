@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesService", "SalesService\SalesService.csproj", "{98EDF2FE-4B51-43A9-BD1D-2310587CC47D}"
 EndProject
@@ -27,6 +27,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerImportClient", "CustomerImportClient\CustomerImportClient.csproj", "{A188B2D6-9195-4298-A0D0-45EC047068CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerRelationshipManagementService", "CustomerRelationshipManagementService\CustomerRelationshipManagementService.csproj", "{178AA576-6E24-440C-B254-A47131719C2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web", "web\web.csproj", "{2021454B-2FE9-46EF-9FC4-55C4FA0BCB13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,10 @@ Global
 		{178AA576-6E24-440C-B254-A47131719C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{178AA576-6E24-440C-B254-A47131719C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{178AA576-6E24-440C-B254-A47131719C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2021454B-2FE9-46EF-9FC4-55C4FA0BCB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2021454B-2FE9-46EF-9FC4-55C4FA0BCB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2021454B-2FE9-46EF-9FC4-55C4FA0BCB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2021454B-2FE9-46EF-9FC4-55C4FA0BCB13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
