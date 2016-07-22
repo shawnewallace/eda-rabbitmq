@@ -17,7 +17,6 @@ namespace SalesServiceClient
 			Console.WriteLine("hit enter to start");
 			Console.ReadLine();
 
-
 			var service = new OrderCreator();
 
 			for (var i = 0; i < 100; i++)
