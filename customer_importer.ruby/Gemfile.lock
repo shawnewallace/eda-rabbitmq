@@ -4,14 +4,12 @@ GEM
     amq-protocol (2.0.1)
     bunny (2.6.1)
       amq-protocol (>= 2.0.1)
-    curb (0.9.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bunny
-  curb
 
 BUNDLED WITH
-   1.13.6
+   1.13.7

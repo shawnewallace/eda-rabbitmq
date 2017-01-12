@@ -18,13 +18,13 @@ ARGV.each do |severity|
   q.bind(x, :routing_key => severity)
 end
 
-puts " [*] Waiting for logs. To exit press CTRL+C"
+puts " [*] Waiting for customer changes. To exit press CTRL+C"
 
 begin
   q.subscribe(:block => true, :manual_ack => true) do |delivery_info, properties, body|
     puts " [x] #{delivery_info.routing_key}:#{body}"
     ch.acknowledge(delivery_info.delivery_tag, true)    
-    sleep(10)
+    sleep(5)
   end
 rescue Interrupt => _
   ch.close
