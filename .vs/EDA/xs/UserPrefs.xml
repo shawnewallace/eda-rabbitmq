@@ -1,0 +1,38 @@
+﻿<Properties StartupConfiguration="{16209383-3687-4EC7-8126-9FF58CB1755E}|Default">
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="EDA" expanded="True">
+            <Node name="CustomerImportClient" expanded="True" />
+            <Node name="web" expanded="True">
+              <Node name="Content" expanded="True">
+                <Node name="Site.less" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Logger PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations>
+    <MultiItemSolutionRunConfiguration Id="all" Name="all">
+      <Items>
+        <StartupItem ItemId="{A188B2D6-9195-4298-A0D0-45EC047068CF}" ItemName="CustomerImportClient" ConfigurationId="Default" />
+        <StartupItem ItemId="{178AA576-6E24-440C-B254-A47131719C2E}" ItemName="CustomerRelationshipManagementService" ConfigurationId="Default" />
+        <StartupItem ItemId="{E95FC06B-A079-402E-90FC-69F6341C437E}" ItemName="InvoicingService" ConfigurationId="Default" />
+        <StartupItem ItemId="{16209383-3687-4EC7-8126-9FF58CB1755E}" ItemName="Logger" ConfigurationId="Default" />
+        <StartupItem ItemId="{8F84239E-F585-42F9-8FC5-15FCF900F728}" ItemName="SalesServiceClient" ConfigurationId="Default" />
+        <StartupItem ItemId="{123F437E-9559-4E5D-A0CB-A8D57E4BFF7F}" ItemName="ShippingService" ConfigurationId="Default" />
+        <StartupItem ItemId="{A7A51B5D-7FB9-49E9-9C08-B457823F80C1}" ItemName="Warehouse" ConfigurationId="Default" />
+        <StartupItem ItemId="{2021454B-2FE9-46EF-9FC4-55C4FA0BCB13}" ItemName="web" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+  </MultiItemStartupConfigurations>
+</Properties>
