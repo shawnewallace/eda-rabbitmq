@@ -1,10 +1,18 @@
 ﻿<Properties StartupConfiguration="local">
   <MonoDevelop.Ide.ItemProperties.Warehouse PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Logger/Program.cs">
+    <Files>
+      <File FileName="Logger/Program.cs" Line="9" Column="21" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="StirTrek2019" expanded="True" selected="True" />
+          <Node name="StirTrek2019" expanded="True">
+            <Node name="Logger" expanded="True">
+              <Node name="Models" expanded="True" />
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
