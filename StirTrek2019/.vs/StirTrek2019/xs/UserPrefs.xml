@@ -7,10 +7,9 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="StirTrek2019" expanded="True">
+          <Node name="StirTrek2019" expanded="True" selected="True">
             <Node name="Logger" expanded="True">
               <Node name="Models" expanded="True" />
-              <Node name="Program.cs" selected="True" />
             </Node>
           </Node>
         </State>
