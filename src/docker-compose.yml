@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  invoicingconsumer:
+    image: ${DOCKER_REGISTRY-}invoicingconsumer
+    build:
+      context: .
+      dockerfile: InvoicingConsumer/Dockerfile
