@@ -1,28 +1,30 @@
-﻿using System.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using eda.core;
-using eda.core.events;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using eda.core;
+using eda.core.events;
 
-namespace eda.invoicingConsumer
+namespace eda.crmConsumer
 {
-  public class InvoicingConsumer : BackgroundQService<InvoicingConsumer>
+  public class CrmConsumer : BackgroundQService<CrmConsumer>
   {
-    private static int _ordersReceived = 0;
+    private static int _newCustomerReceived = 0;
 
-    public InvoicingConsumer(ILogger<InvoicingConsumer> logger) : base(logger)
+    public CrmConsumer(ILogger<CrmConsumer> logger) : base(logger)
     {
       Init();
     }
 
     private void Init()
     {
-      Logger.LogInformation("[INVOICER] Init");
+      Logger.LogInformation("[CRM] Init");
 
       var factory = new ConnectionFactory { HostName = "host.docker.internal" };
       Connection = factory.CreateConnection();
@@ -30,15 +32,15 @@ namespace eda.invoicingConsumer
       Channel = Connection.CreateModel();
 
       DeclareExchange();
-      DeclareQ(Constants.INVOICING_QUEUE_NAME);
-      BindToQ(queueName: Constants.INVOICING_QUEUE_NAME,
-                eventName: Constants.ORDER_ACCEPTED_EVENT);
+      DeclareQ(Constants.MASTER_CUSTOMER_QUEUE_NAME);
+      BindToQ(queueName: Constants.MASTER_CUSTOMER_QUEUE_NAME,
+                eventName: Constants.NEW_CUSTOMER_EVENT);
       SetUpQoS();
 
       Connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
 
-      Logger.LogInformation("[INVOICER] Init COMPLETE");
-      Logger.LogInformation("[INVOICER] Waiting for messages.");
+      Logger.LogInformation("[CRM] Init COMPLETE");
+      Logger.LogInformation("[CRM] Waiting for messages.");
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -53,7 +55,7 @@ namespace eda.invoicingConsumer
         var orderEvent = DeserializeMessage(content);
         var routingKey = ea.RoutingKey;
 
-        Logger.LogInformation($" [>>>>>>>>>>] Received Order Accepted '{routingKey}':'{_ordersReceived++}'");
+        Logger.LogInformation($" [>>>>>>>>>>] Received '{routingKey}':'{_newCustomerReceived++}'");
 
         // handle the received message  
         ProcessEvent(orderEvent);
@@ -65,25 +67,20 @@ namespace eda.invoicingConsumer
       consumer.Unregistered += OnConsumerUnregistered;
       consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-      Channel.BasicConsume(queue: Constants.INVOICING_QUEUE_NAME, autoAck: false, consumer: consumer);
+      Channel.BasicConsume(queue: Constants.MASTER_CUSTOMER_QUEUE_NAME, autoAck: false, consumer: consumer);
       return Task.CompletedTask;
     }
 
-    private void ProcessEvent(IOrderAccepted orderEvent)
+    private void ProcessEvent(INewCustomer newCustomer)
     {
-      Logger.LogInformation("\tProcessing order {0}...", orderEvent.OrderId);
-      ICustomerBilled billedEvent = new CustomerBilledEvent(orderEvent.OrderId);
-      Thread.Sleep(5000);
-      var message = JsonConvert.SerializeObject(billedEvent);
-      var body = System.Text.Encoding.UTF8.GetBytes(message);
-      Channel.BasicPublish(Constants.EXCHANGE_NAME, Constants.CUSTOMER_BILLED_EVENT, null, body);
-
-      Logger.LogInformation("Done");
+      Logger.LogInformation("\tProcessing customer {0}...", newCustomer.CustomerId);
+      Thread.Sleep(1000);
+      Logger.LogInformation("Customer Created");
     }
 
-    private static IOrderAccepted DeserializeMessage(string message)
+    private static INewCustomer DeserializeMessage(string message)
     {
-      return JsonConvert.DeserializeObject<Order>(message);
+      return JsonConvert.DeserializeObject<NewCustomer>(message);
     }
 
     private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }
@@ -98,5 +95,10 @@ namespace eda.invoicingConsumer
       Connection.Close();
       base.Dispose();
     }
+  }
+
+  internal class NewCustomer : INewCustomer
+  {
+    public Guid CustomerId { get; set; }
   }
 }

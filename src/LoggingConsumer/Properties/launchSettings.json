@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "LoggingConsumer": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ namespace eda.core
     public const string SHIPPING_QUEUE_NAME = "shipping_q";
     public const string WAREHOUSE_QUEUE_NAME = "warehouse_q";
     public const string MASTER_CUSTOMER_QUEUE_NAME = "customer_q";
+
     public const string ORDER_ACCEPTED_EVENT = "order_accepted";
     public const string CUSTOMER_BILLED_EVENT = "customer_billed";
     public const string READY_FOR_SHIPMENT_EVENT = "order_ready_to_ship";

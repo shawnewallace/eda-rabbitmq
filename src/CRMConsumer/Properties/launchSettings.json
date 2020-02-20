@@ -1,14 +1,14 @@
 {
   "profiles": {
-    "InvoicingConsumer": {
+    "CRMConsumer": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://localhost:5003"
     },
-    "eda.invoicingConsumer": {
+    "eda.crmConsumer": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

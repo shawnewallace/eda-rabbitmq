@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using eda.core;
 using eda.core.events;
@@ -8,28 +7,17 @@ using RabbitMQ.Client;
 
 namespace eda.services
 {
-  public class OrderAcceptedEvent : IOrderAccepted
-  {
-    public Guid CustomerId { get; set; }
-    public Guid OrderId { get; set; }
-    public List<OrderItem> OrderItems { get; set; }
-  }
 
-  public class NewCustomerEvent : INewCustomer
-  {
-    public Guid CustomerId { get; set; }
-  }
-
-  public class OrderCreator : QBase
+  public class OrderCreator
   {
     public void Submit(IOrderAccepted order)
     {
-      var factory = GetConnectionFactory();
+      var factory = new ConnectionFactory { HostName = "localhost" };
       using (var connection = factory.CreateConnection())
       {
         using (var channel = connection.CreateModel())
         {
-          DeclareExchange(channel);
+          channel.ExchangeDeclare(Constants.EXCHANGE_NAME, "direct", true);
 
           var message = JsonConvert.SerializeObject(order);
           var body = Encoding.UTF8.GetBytes(message);

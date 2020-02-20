@@ -6,3 +6,27 @@ services:
     build:
       context: .
       dockerfile: InvoicingConsumer/Dockerfile
+
+  crmconsumer:
+    image: ${DOCKER_REGISTRY-}crmconsumer
+    build:
+      context: .
+      dockerfile: CRMConsumer/Dockerfile
+    depends_on:
+      - db
+
+  loggingconsumer:
+    image: ${DOCKER_REGISTRY-}loggingconsumer
+    build:
+      context: .
+      dockerfile: LoggingConsumer/Dockerfile
+    depends_on:
+      - db
+
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      SA_PASSWORD: "21239Admin"
+      ACCEPT_EULA: "Y"
+
+

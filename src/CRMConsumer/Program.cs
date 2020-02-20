@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace eda.invoicingConsumer
+namespace eda.crmConsumer
 {
   public class Program
   {
@@ -16,15 +16,15 @@ namespace eda.invoicingConsumer
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-          .ConfigureLogging(logging =>
-          {
-            logging.ClearProviders();
-            logging.AddConsole();
-          })
-          .ConfigureServices((hostContext, services) =>
-          {
-            services.AddHostedService<InvoicingConsumer>();
-          });
+      Host.CreateDefaultBuilder(args)
+      .ConfigureLogging(logging =>
+      {
+        logging.ClearProviders();
+        logging.AddConsole();
+      })
+      .ConfigureServices((hostContext, services) =>
+      {
+        services.AddHostedService<CrmConsumer>();
+      });
   }
 }

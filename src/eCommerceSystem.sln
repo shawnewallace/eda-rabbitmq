@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{2CC076A9-C324-4F23-ABEB-87DD6137474E}"
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventGenerator", "EventGenerator\EventGenerator.csproj", "{FBDB963A-E6E2-4DB2-B70F-A5731BC038EC}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{68E3C621-A78F-49F8-A955-000BBC154F2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRMConsumer", "CRMConsumer\CRMConsumer.csproj", "{542A998C-F0FA-4E31-96C1-6B9640D9B11B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingConsumer", "LoggingConsumer\LoggingConsumer.csproj", "{674E5E19-7E9F-402E-8B5D-FB323D0E137C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,5 +41,13 @@ Global
 		{68E3C621-A78F-49F8-A955-000BBC154F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68E3C621-A78F-49F8-A955-000BBC154F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68E3C621-A78F-49F8-A955-000BBC154F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{542A998C-F0FA-4E31-96C1-6B9640D9B11B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542A998C-F0FA-4E31-96C1-6B9640D9B11B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542A998C-F0FA-4E31-96C1-6B9640D9B11B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542A998C-F0FA-4E31-96C1-6B9640D9B11B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{674E5E19-7E9F-402E-8B5D-FB323D0E137C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{674E5E19-7E9F-402E-8B5D-FB323D0E137C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{674E5E19-7E9F-402E-8B5D-FB323D0E137C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{674E5E19-7E9F-402E-8B5D-FB323D0E137C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

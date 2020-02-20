@@ -6,16 +6,46 @@ using eda.services;
 
 namespace EventGenerator
 {
-  class Program
+  public class Program
   {
-    static void Main(string[] args)
+    public static int Main(string[] args)
     {
+      string usageText = $"Usage: EventGenerator [1 = '{Constants.ORDER_ACCEPTED_EVENT}', 2 = '{Constants.NEW_CUSTOMER_EVENT}'] [num_to_generate]";
+
+      if (args.Length < 2)
+      {
+        Console.WriteLine(usageText);
+        return 1;
+      }
+
+      int whichEvent = short.Parse(args[0]);
+      int n = short.Parse(args[1]);
+
       Console.WriteLine("hit enter to start");
       Console.ReadLine();
 
+      if (whichEvent == 1) { GenerateOrders(n); }
+      if (whichEvent == 2) { GenerateNewCustomers(n); }
+
+      return 0;
+    }
+
+    private static void GenerateNewCustomers(int n)
+    {
+      var service = new CustomerCreator();
+
+      for (var i = 0; i < n; i++)
+      {
+        var customer = CreateNewSampleCustomerEvent();
+        service.Submit(customer);
+      }
+    }
+
+    private static void GenerateOrders(int n)
+    {
       var service = new OrderCreator();
 
-      for (var i = 0; i < 100; i++)
+      for (var i = 0; i < n; i++)
       {
         var order = CreateNewSampleOrderAcceptedEvent();
         service.Submit(order);
@@ -35,6 +65,13 @@ namespace EventGenerator
         new OrderItem {Description = "Item Three", ItemId = Guid.NewGuid(), Price = 5, Quantity = 1}
       };
       return order;
+    }
+
+    private static INewCustomer CreateNewSampleCustomerEvent()
+    {
+      INewCustomer customer = new NewCustomerEvent();
+      customer.CustomerId = Guid.NewGuid();
+      return customer;
     }
   }
 }

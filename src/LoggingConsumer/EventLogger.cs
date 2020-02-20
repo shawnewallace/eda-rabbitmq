@@ -1,28 +1,28 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using eda.core;
-using eda.core.events;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using eda.core;
+using eda.core.events;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace eda.invoicingConsumer
+namespace eda.loggingConsumer
 {
-  public class InvoicingConsumer : BackgroundQService<InvoicingConsumer>
-  {
-    private static int _ordersReceived = 0;
 
-    public InvoicingConsumer(ILogger<InvoicingConsumer> logger) : base(logger)
+  public class EventLogger : BackgroundQService<EventLogger>
+  {
+    public EventLogger(ILogger<EventLogger> logger) : base(logger)
     {
       Init();
     }
 
     private void Init()
     {
-      Logger.LogInformation("[INVOICER] Init");
+      Logger.LogInformation("[LOGGER] Init");
 
       var factory = new ConnectionFactory { HostName = "host.docker.internal" };
       Connection = factory.CreateConnection();
@@ -30,15 +30,17 @@ namespace eda.invoicingConsumer
       Channel = Connection.CreateModel();
 
       DeclareExchange();
-      DeclareQ(Constants.INVOICING_QUEUE_NAME);
-      BindToQ(queueName: Constants.INVOICING_QUEUE_NAME,
-                eventName: Constants.ORDER_ACCEPTED_EVENT);
+      DeclareQ(Constants.LOGGING_QUEUE_NAME);
+
+      foreach (var eventName in Constants.EventCollection)
+      {
+        BindToQ(queueName: Constants.LOGGING_QUEUE_NAME,
+                  eventName: eventName);
+      }
       SetUpQoS();
 
-      Connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
-
-      Logger.LogInformation("[INVOICER] Init COMPLETE");
-      Logger.LogInformation("[INVOICER] Waiting for messages.");
+      Logger.LogInformation("[LOGGER] Init COMPLETE");
+      Logger.LogInformation("[LOGGER] Waiting for messages.");
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -50,13 +52,13 @@ namespace eda.invoicingConsumer
       {
         // received message  
         var content = System.Text.Encoding.UTF8.GetString(ea.Body);
-        var orderEvent = DeserializeMessage(content);
         var routingKey = ea.RoutingKey;
 
-        Logger.LogInformation($" [>>>>>>>>>>] Received Order Accepted '{routingKey}':'{_ordersReceived++}'");
+        Logger.LogInformation($" [>>>>>>>>>>] LOGGER Received  '{routingKey}':'{content}'");
 
         // handle the received message  
-        ProcessEvent(orderEvent);
+        //ProcessEvent(orderEvent);
+        LogMessage(routingKey, content);
         Channel.BasicAck(ea.DeliveryTag, false);
       };
 
@@ -65,25 +67,13 @@ namespace eda.invoicingConsumer
       consumer.Unregistered += OnConsumerUnregistered;
       consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-      Channel.BasicConsume(queue: Constants.INVOICING_QUEUE_NAME, autoAck: false, consumer: consumer);
+      Channel.BasicConsume(queue: Constants.LOGGING_QUEUE_NAME, autoAck: false, consumer: consumer);
       return Task.CompletedTask;
     }
 
-    private void ProcessEvent(IOrderAccepted orderEvent)
+    private void LogMessage(string routingKey, string content)
     {
-      Logger.LogInformation("\tProcessing order {0}...", orderEvent.OrderId);
-      ICustomerBilled billedEvent = new CustomerBilledEvent(orderEvent.OrderId);
-      Thread.Sleep(5000);
-      var message = JsonConvert.SerializeObject(billedEvent);
-      var body = System.Text.Encoding.UTF8.GetBytes(message);
-      Channel.BasicPublish(Constants.EXCHANGE_NAME, Constants.CUSTOMER_BILLED_EVENT, null, body);
-
-      Logger.LogInformation("Done");
-    }
-
-    private static IOrderAccepted DeserializeMessage(string message)
-    {
-      return JsonConvert.DeserializeObject<Order>(message);
+      throw new NotImplementedException();
     }
 
     private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }
