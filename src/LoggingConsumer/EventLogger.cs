@@ -9,6 +9,7 @@ using eda.core;
 using eda.core.events;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Newtonsoft.Json;
 
 namespace eda.loggingConsumer
 {
@@ -56,8 +57,6 @@ namespace eda.loggingConsumer
 
         Logger.LogInformation($" [>>>>>>>>>>] LOGGER Received  '{routingKey}':'{content}'");
 
-        // handle the received message  
-        //ProcessEvent(orderEvent);
         LogMessage(routingKey, content);
         Channel.BasicAck(ea.DeliveryTag, false);
       };
@@ -73,7 +72,25 @@ namespace eda.loggingConsumer
 
     private void LogMessage(string routingKey, string content)
     {
-      throw new NotImplementedException();
+      var model = new LogEntry {
+        RoutingKey = routingKey,
+        Content = content
+      };
+
+      try{
+        var order = JsonConvert.DeserializeObject<OrderIdModel>(content);
+        model.OrderId = order.OrderId;
+      }
+      catch
+      {
+        model.OrderId = Guid.Empty;
+      }
+
+      using(var db = new LoggingContext())
+      {
+        db.LogEntries.Add(model);
+        db.SaveChanges();
+      }
     }
 
     private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }

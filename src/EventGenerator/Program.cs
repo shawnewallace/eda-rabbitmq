@@ -21,11 +21,18 @@ namespace EventGenerator
       int whichEvent = short.Parse(args[0]);
       int n = short.Parse(args[1]);
 
-      Console.WriteLine("hit enter to start");
-      Console.ReadLine();
-
-      if (whichEvent == 1) { GenerateOrders(n); }
-      if (whichEvent == 2) { GenerateNewCustomers(n); }
+      if (whichEvent == 1)
+      {
+        Console.WriteLine($"Generating {n} ORDERS. Hit enter to start");
+        Console.ReadLine();
+        GenerateOrders(n);
+      }
+      if (whichEvent == 2)
+      {
+        Console.WriteLine($"Generating {n} NEW CUSTOMERS. Hit enter to start");
+        Console.ReadLine();
+        GenerateNewCustomers(n);
+      }
 
       return 0;
     }

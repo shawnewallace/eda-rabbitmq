@@ -25,6 +25,8 @@ services:
 
   db:
     image: "mcr.microsoft.com/mssql/server"
+    ports: 
+      - "1433:1433"
     environment:
       SA_PASSWORD: "21239Admin"
       ACCEPT_EULA: "Y"
