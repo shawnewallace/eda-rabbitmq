@@ -31,6 +31,14 @@ services:
     depends_on:
       - db
 
+  shippingconsumer:
+    image: ${DOCKER_REGISTRY-}shippingconsumer
+    build:
+      context: .
+      dockerfile: ShippingConsumer/Dockerfile
+    depends_on:
+      - db
+
   db:
     image: "mcr.microsoft.com/mssql/server"
     ports: 

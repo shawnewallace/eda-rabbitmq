@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingConsumer", "LoggingC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseConsumer", "WarehouseConsumer\WarehouseConsumer.csproj", "{7C1E3BDB-E0EC-4996-9D3F-CE700C126781}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingConsumer", "ShippingConsumer\ShippingConsumer.csproj", "{0C714494-A28C-42E4-BD0C-0DB65092CEDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,5 +57,9 @@ Global
 		{7C1E3BDB-E0EC-4996-9D3F-CE700C126781}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C1E3BDB-E0EC-4996-9D3F-CE700C126781}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C1E3BDB-E0EC-4996-9D3F-CE700C126781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C714494-A28C-42E4-BD0C-0DB65092CEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C714494-A28C-42E4-BD0C-0DB65092CEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C714494-A28C-42E4-BD0C-0DB65092CEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C714494-A28C-42E4-BD0C-0DB65092CEDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

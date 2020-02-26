@@ -74,7 +74,7 @@ namespace eda.crmConsumer
     private void ProcessEvent(INewCustomer newCustomer)
     {
       Logger.LogInformation("\tProcessing customer {0}...", newCustomer.CustomerId);
-      Thread.Sleep(1000);
+      Thread.Sleep(500);
       Logger.LogInformation("Customer Created");
     }
 

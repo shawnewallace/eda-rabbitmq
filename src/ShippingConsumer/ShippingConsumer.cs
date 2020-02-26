@@ -1,4 +1,7 @@
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using eda.core;
@@ -42,7 +45,7 @@ namespace eda.shippingConsumer
       Logger.LogInformation("[SHIPPER] Waiting for messages.");
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
       stoppingToken.ThrowIfCancellationRequested();
 
@@ -51,13 +54,12 @@ namespace eda.shippingConsumer
       {
         // received message  
         var content = System.Text.Encoding.UTF8.GetString(ea.Body);
-        var orderEvent = DeserializeMessage(content);
         var routingKey = ea.RoutingKey;
 
         Logger.LogInformation($" [>>>>>>>>>>] Received  '{routingKey}':'{content}'");
 
         // handle the received message  
-        ProcessEvent(orderEvent);
+        ProcessMessage(content, routingKey);
         Channel.BasicAck(ea.DeliveryTag, false);
       };
 
@@ -70,50 +72,47 @@ namespace eda.shippingConsumer
       return Task.CompletedTask;
     }
 
-    private static void ProcessMessage(IModel channel, string message, string routingKey)
+    private void ProcessMessage(string message, string routingKey)
     {
       switch (routingKey)
       {
         case Constants.ORDER_ACCEPTED_EVENT:
-          ProcessOrderAccepted(channel, message);
+          ProcessOrderAccepted(message);
           return;
         case Constants.CUSTOMER_BILLED_EVENT:
-          ProcessCustomerBilled(channel, message);
+          ProcessCustomerBilled(message);
           return;
       }
 
-      Console.WriteLine("***** UNABLE TO PROCESS MESSAGE {0} : {1}", routingKey, message);
+      Logger.LogInformation("***** UNABLE TO PROCESS MESSAGE {0} : {1}", routingKey, message);
 
       //throw new ArgumentException("Could not process message for routing key {0}", routingKey);
     }
 
-    private static void ProcessCustomerBilled(IModel channel, string message)
+    private void ProcessCustomerBilled(string message)
     {
       var billed = JsonConvert.DeserializeObject<CustomerBilledEvent>(message);
-      Console.Write(" [>>>>>>>>>>] Received Customer Billed '{0}'...", billed.OrderId);
+      Logger.LogInformation(" [>>>>>>>>>>] Received Customer Billed '{0}'...", billed.OrderId);
       Thread.Sleep(10000);
       IOrderReadyForShipment ready = new OrderReady { OrderId = billed.OrderId };
       var orderMessage = JsonConvert.SerializeObject(billed);
       var body = Encoding.UTF8.GetBytes(orderMessage);
-      channel.BasicPublish(Constants.EXCHANGE_NAME, Constants.READY_FOR_SHIPMENT_EVENT, null, body);
-      Console.WriteLine("Processed");
+      Channel.BasicPublish(Constants.EXCHANGE_NAME, Constants.READY_FOR_SHIPMENT_EVENT, null, body);
+      Logger.LogInformation("Processed");
     }
 
-    private static void ProcessOrderAccepted(IModel channel, string message)
+    private void ProcessOrderAccepted(string message)
     {
       var order = JsonConvert.DeserializeObject<Order>(message);
-      Console.Write(" [>>>>>>>>>>] Received Order Accepted '{0}'...", order.OrderId);
+      Logger.LogInformation(" [>>>>>>>>>>] Received Order Accepted '{0}'...", order.OrderId);
       Thread.Sleep(500);
-      Console.WriteLine("Processed");
+      Logger.LogInformation("Processed");
     }
   }
 
   internal class CustomerBilledEvent : ICustomerBilled
   {
-    public CustomerBilledEvent(Guid orderEvent)
-    {
-      OrderId = orderEvent;
-    }
+    public CustomerBilledEvent(Guid orderEvent) => OrderId = orderEvent;
 
     public Guid OrderId { get; set; }
   }

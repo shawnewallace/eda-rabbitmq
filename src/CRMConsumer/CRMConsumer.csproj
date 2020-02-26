@@ -9,7 +9,7 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'CRMConsumer' ">
     <StartAction>Project</StartAction>
-    <ApplicationURL>http://localhost:5003</ApplicationURL>
+    <ApplicationURL>http://localhost:5000</ApplicationURL>
   </PropertyGroup>
 
   <ItemGroup>
