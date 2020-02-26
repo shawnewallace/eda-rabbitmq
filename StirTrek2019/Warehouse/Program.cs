@@ -73,13 +73,5 @@ namespace eda.Warehouse
   }
 }
 
-internal class OrderShipped : IOrderShipped
-{
-  public Guid OrderId { get; set; }
-}
 
-internal class OrderReady : IOrderReadyForShipment
-{
-  public Guid OrderId { get; set; }
-}
 }

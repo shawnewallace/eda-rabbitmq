@@ -2,6 +2,7 @@ using System;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace eda.core
 {
@@ -44,13 +45,19 @@ namespace eda.core
 
     protected  void BindToQ(string queueName, string eventName)
     {
-      Console.Write("Binding to event {0}...", eventName);
+      Logger.LogInformation("Binding to event {0}...", eventName);
 
       Channel.QueueBind(
                   queue: queueName,
                   exchange: Constants.EXCHANGE_NAME,
                   routingKey: eventName);
-      Console.WriteLine("Done");
+      Logger.LogInformation("Done");
     }
+
+    protected void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }
+    protected void OnConsumerUnregistered(object sender, ConsumerEventArgs e) { }
+    protected void OnConsumerRegistered(object sender, ConsumerEventArgs e) { }
+    protected void OnConsumerShutdown(object sender, ShutdownEventArgs e) { }
+    protected void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e) { }
   }
 }
