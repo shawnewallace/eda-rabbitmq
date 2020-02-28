@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -108,25 +106,5 @@ namespace eda.shippingConsumer
       Thread.Sleep(500);
       Logger.LogInformation("Processed");
     }
-  }
-
-  internal class CustomerBilledEvent : ICustomerBilled
-  {
-    public CustomerBilledEvent(Guid orderEvent) => OrderId = orderEvent;
-
-    public Guid OrderId { get; set; }
-  }
-
-  internal class Order : IOrderAccepted
-  {
-    public Guid CustomerId { get; set; }
-    public Guid OrderId { get; set; }
-    public List<OrderItem> OrderItems { get; set; }
-  }
-
-  internal class OrderReady : IOrderReadyForShipment
-  {
-    public Guid OrderId { get; set; }
-
   }
 }

@@ -1,3 +1,3 @@
 docker-compose up 
 
-docker-compose up --scale invoicingconsumer=10 --scale crmconsumer=10 --scale loggingconsumer=10
+docker-compose up --scale warehouseconsumer=10 --scale shippingconsumer=10
