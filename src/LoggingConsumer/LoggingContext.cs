@@ -18,7 +18,7 @@ namespace eda.loggingConsumer
     }
   }
 
-  [Table(name: "log_entries", Schema = "app")]
+  [Table(name: "log_entries", Schema = "dbo")]
   public class LogEntry
   {
     [Key] public int Id { get; set; }
