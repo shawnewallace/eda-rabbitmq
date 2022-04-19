@@ -10,7 +10,7 @@ namespace EventGenerator
   {
     public static int Main(string[] args)
     {
-      string usageText = $"Usage: EventGenerator [1 = '{Constants.ORDER_ACCEPTED_EVENT}', 2 = '{Constants.NEW_CUSTOMER_EVENT}'] [num_to_generate]";
+      string usageText = $"Usage: EventGenerator [1 = '{AppConstants.ORDER_ACCEPTED_EVENT}', 2 = '{AppConstants.NEW_CUSTOMER_EVENT}'] [num_to_generate]";
 
       if (args.Length < 2)
       {

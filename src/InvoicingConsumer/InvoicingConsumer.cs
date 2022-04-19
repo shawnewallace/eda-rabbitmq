@@ -25,14 +25,15 @@ namespace eda.invoicingConsumer
       Logger.LogInformation("[INVOICER] Init");
 
       var factory = new ConnectionFactory { HostName = "host.docker.internal" };
+      //var factory = new ConnectionFactory { HostName = "localhost" };
       Connection = factory.CreateConnection();
 
       Channel = Connection.CreateModel();
 
       DeclareExchange();
-      DeclareQ(Constants.INVOICING_QUEUE_NAME);
-      BindToQ(queueName: Constants.INVOICING_QUEUE_NAME,
-                eventName: Constants.ORDER_ACCEPTED_EVENT);
+      DeclareQ(AppConstants.INVOICING_QUEUE_NAME);
+      BindToQ(queueName: AppConstants.INVOICING_QUEUE_NAME,
+                eventName: AppConstants.ORDER_ACCEPTED_EVENT);
       SetUpQoS();
 
       Connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
@@ -48,8 +49,8 @@ namespace eda.invoicingConsumer
       var consumer = new EventingBasicConsumer(Channel);
       consumer.Received += (ch, ea) =>
       {
-        // received message  
-        var content = System.Text.Encoding.UTF8.GetString(ea.Body);
+        // received message
+        var content = System.Text.Encoding.UTF8.GetString(ea.Body.Span);
         var orderEvent = DeserializeMessage(content);
         var routingKey = ea.RoutingKey;
 
@@ -65,7 +66,7 @@ namespace eda.invoicingConsumer
       consumer.Unregistered += OnConsumerUnregistered;
       consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-      Channel.BasicConsume(queue: Constants.INVOICING_QUEUE_NAME, autoAck: false, consumer: consumer);
+      Channel.BasicConsume(queue: AppConstants.INVOICING_QUEUE_NAME, autoAck: false, consumer: consumer);
       return Task.CompletedTask;
     }
 
@@ -76,7 +77,7 @@ namespace eda.invoicingConsumer
       Thread.Sleep(5000);
       var message = JsonConvert.SerializeObject(billedEvent);
       var body = System.Text.Encoding.UTF8.GetBytes(message);
-      Channel.BasicPublish(Constants.EXCHANGE_NAME, Constants.CUSTOMER_BILLED_EVENT, null, body);
+      Channel.BasicPublish(AppConstants.EXCHANGE_NAME, AppConstants.CUSTOMER_BILLED_EVENT, null, body);
 
       Logger.LogInformation("Done");
     }

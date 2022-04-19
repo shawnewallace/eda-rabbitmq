@@ -30,11 +30,11 @@ namespace eda.shippingConsumer
       Channel = Connection.CreateModel();
 
       DeclareExchange();
-      DeclareQ(Constants.SHIPPING_QUEUE_NAME);
-      BindToQ(queueName: Constants.SHIPPING_QUEUE_NAME,
-                eventName: Constants.CUSTOMER_BILLED_EVENT);
-      BindToQ(queueName: Constants.SHIPPING_QUEUE_NAME,
-                eventName: Constants.ORDER_ACCEPTED_EVENT);
+      DeclareQ(AppConstants.SHIPPING_QUEUE_NAME);
+      BindToQ(queueName: AppConstants.SHIPPING_QUEUE_NAME,
+                eventName: AppConstants.CUSTOMER_BILLED_EVENT);
+      BindToQ(queueName: AppConstants.SHIPPING_QUEUE_NAME,
+                eventName: AppConstants.ORDER_ACCEPTED_EVENT);
       SetUpQoS();
 
       Connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
@@ -51,7 +51,7 @@ namespace eda.shippingConsumer
       consumer.Received += (ch, ea) =>
       {
         // received message  
-        var content = System.Text.Encoding.UTF8.GetString(ea.Body);
+        var content = System.Text.Encoding.UTF8.GetString(ea.Body.Span);
         var routingKey = ea.RoutingKey;
 
         Logger.LogInformation($" [>>>>>>>>>>] Received  '{routingKey}':'{content}'");
@@ -66,7 +66,7 @@ namespace eda.shippingConsumer
       consumer.Unregistered += OnConsumerUnregistered;
       consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-      Channel.BasicConsume(queue: Constants.SHIPPING_QUEUE_NAME, autoAck: false, consumer: consumer);
+      Channel.BasicConsume(queue: AppConstants.SHIPPING_QUEUE_NAME, autoAck: false, consumer: consumer);
       return Task.CompletedTask;
     }
 
@@ -74,10 +74,10 @@ namespace eda.shippingConsumer
     {
       switch (routingKey)
       {
-        case Constants.ORDER_ACCEPTED_EVENT:
+        case AppConstants.ORDER_ACCEPTED_EVENT:
           ProcessOrderAccepted(message);
           return;
-        case Constants.CUSTOMER_BILLED_EVENT:
+        case AppConstants.CUSTOMER_BILLED_EVENT:
           ProcessCustomerBilled(message);
           return;
       }
@@ -95,7 +95,7 @@ namespace eda.shippingConsumer
       IOrderReadyForShipment ready = new OrderReady { OrderId = billed.OrderId };
       var orderMessage = JsonConvert.SerializeObject(billed);
       var body = Encoding.UTF8.GetBytes(orderMessage);
-      Channel.BasicPublish(Constants.EXCHANGE_NAME, Constants.READY_FOR_SHIPMENT_EVENT, null, body);
+      Channel.BasicPublish(AppConstants.EXCHANGE_NAME, AppConstants.READY_FOR_SHIPMENT_EVENT, null, body);
       Logger.LogInformation("Processed");
     }
 

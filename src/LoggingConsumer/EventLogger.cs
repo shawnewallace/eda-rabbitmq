@@ -31,11 +31,11 @@ namespace eda.loggingConsumer
       Channel = Connection.CreateModel();
 
       DeclareExchange();
-      DeclareQ(Constants.LOGGING_QUEUE_NAME);
+      DeclareQ(AppConstants.LOGGING_QUEUE_NAME);
 
-      foreach (var eventName in Constants.EventCollection)
+      foreach (var eventName in AppConstants.EventCollection)
       {
-        BindToQ(queueName: Constants.LOGGING_QUEUE_NAME,
+        BindToQ(queueName: AppConstants.LOGGING_QUEUE_NAME,
                   eventName: eventName);
       }
       SetUpQoS();
@@ -52,7 +52,7 @@ namespace eda.loggingConsumer
       consumer.Received += (ch, ea) =>
       {
         // received message  
-        var content = System.Text.Encoding.UTF8.GetString(ea.Body);
+        var content = System.Text.Encoding.UTF8.GetString(ea.Body.Span);
         var routingKey = ea.RoutingKey;
 
         Logger.LogInformation($" [>>>>>>>>>>] LOGGER Received  '{routingKey}':'{content}'");
@@ -66,7 +66,7 @@ namespace eda.loggingConsumer
       consumer.Unregistered += OnConsumerUnregistered;
       consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-      Channel.BasicConsume(queue: Constants.LOGGING_QUEUE_NAME, autoAck: false, consumer: consumer);
+      Channel.BasicConsume(queue: AppConstants.LOGGING_QUEUE_NAME, autoAck: false, consumer: consumer);
       return Task.CompletedTask;
     }
 

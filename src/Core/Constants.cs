@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace eda.core
 {
 
-  public static class Constants
+  public static class AppConstants
   {
     public const string EXCHANGE_NAME = "retail_system";
     public const string LOGGING_QUEUE_NAME = "logger_q";

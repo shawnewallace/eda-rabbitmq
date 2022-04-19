@@ -32,9 +32,9 @@ namespace eda.warehouseConsumer
       Channel = Connection.CreateModel();
 
       DeclareExchange();
-      DeclareQ(Constants.WAREHOUSE_QUEUE_NAME);
-      BindToQ(queueName: Constants.WAREHOUSE_QUEUE_NAME,
-                eventName: Constants.READY_FOR_SHIPMENT_EVENT);
+      DeclareQ(AppConstants.WAREHOUSE_QUEUE_NAME);
+      BindToQ(queueName: AppConstants.WAREHOUSE_QUEUE_NAME,
+                eventName: AppConstants.READY_FOR_SHIPMENT_EVENT);
       SetUpQoS();
 
       Connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
@@ -51,7 +51,7 @@ namespace eda.warehouseConsumer
       consumer.Received += (ch, ea) =>
       {
         // received message  
-        var content = System.Text.Encoding.UTF8.GetString(ea.Body);
+        var content = System.Text.Encoding.UTF8.GetString(ea.Body.Span);
         var routingKey = ea.RoutingKey;
 
         Logger.LogInformation($" [>>>>>>>>>>] Received '{routingKey}':'{content}'");
@@ -72,7 +72,7 @@ namespace eda.warehouseConsumer
       consumer.Unregistered += OnConsumerUnregistered;
       consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-      Channel.BasicConsume(queue: Constants.WAREHOUSE_QUEUE_NAME, autoAck: false, consumer: consumer);
+      Channel.BasicConsume(queue: AppConstants.WAREHOUSE_QUEUE_NAME, autoAck: false, consumer: consumer);
       return Task.CompletedTask;
     }
 
@@ -80,7 +80,7 @@ namespace eda.warehouseConsumer
     {
       switch (routingKey)
       {
-        case Constants.READY_FOR_SHIPMENT_EVENT:
+        case AppConstants.READY_FOR_SHIPMENT_EVENT:
           ProcessCustomerBilled(content);
           return;
       }
@@ -97,7 +97,7 @@ namespace eda.warehouseConsumer
       IOrderShipped shipped = new OrderShipped { OrderId = ready.OrderId };
       var orderMessage = JsonConvert.SerializeObject(ready);
       var body = Encoding.UTF8.GetBytes(orderMessage);
-      Channel.BasicPublish(Constants.EXCHANGE_NAME, Constants.SHIPPED_EVENT, null, body);
+      Channel.BasicPublish(AppConstants.EXCHANGE_NAME, AppConstants.SHIPPED_EVENT, null, body);
       Console.WriteLine("Shipped");
     }
 

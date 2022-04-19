@@ -22,7 +22,7 @@ namespace eda.core
       var factory = new ConnectionFactory()
       {
         HostName = "localhost",
-        Port = 5672
+        //Port = 15672
       };
 
       return factory;
@@ -30,7 +30,7 @@ namespace eda.core
 
     protected void DeclareExchange()
     {
-      Channel.ExchangeDeclare(Constants.EXCHANGE_NAME, "direct", true);
+      Channel.ExchangeDeclare(AppConstants.EXCHANGE_NAME, "direct", true);
     }
 
     protected void DeclareQ(string name)
@@ -49,7 +49,7 @@ namespace eda.core
 
       Channel.QueueBind(
                   queue: queueName,
-                  exchange: Constants.EXCHANGE_NAME,
+                  exchange: AppConstants.EXCHANGE_NAME,
                   routingKey: eventName);
       Logger.LogInformation("Done");
     }

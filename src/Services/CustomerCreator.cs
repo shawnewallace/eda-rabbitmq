@@ -16,13 +16,13 @@ namespace eda.services
       {
         using (var channel = connection.CreateModel())
         {
-          channel.ExchangeDeclare(Constants.EXCHANGE_NAME, "direct", true);
+          channel.ExchangeDeclare(AppConstants.EXCHANGE_NAME, "direct", true);
 
           var message = JsonConvert.SerializeObject(customer);
           var body = Encoding.UTF8.GetBytes(message);
 
-          channel.BasicPublish(Constants.EXCHANGE_NAME, Constants.NEW_CUSTOMER_EVENT, null, body);
-          Console.WriteLine(" [x] Sent '{0}':'{1}'", Constants.NEW_CUSTOMER_EVENT, message);
+          channel.BasicPublish(AppConstants.EXCHANGE_NAME, AppConstants.NEW_CUSTOMER_EVENT, null, body);
+          Console.WriteLine(" [x] Sent '{0}':'{1}'", AppConstants.NEW_CUSTOMER_EVENT, message);
         }
       }
     }

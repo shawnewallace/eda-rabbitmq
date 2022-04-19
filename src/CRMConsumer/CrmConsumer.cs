@@ -32,9 +32,9 @@ namespace eda.crmConsumer
       Channel = Connection.CreateModel();
 
       DeclareExchange();
-      DeclareQ(Constants.MASTER_CUSTOMER_QUEUE_NAME);
-      BindToQ(queueName: Constants.MASTER_CUSTOMER_QUEUE_NAME,
-                eventName: Constants.NEW_CUSTOMER_EVENT);
+      DeclareQ(AppConstants.MASTER_CUSTOMER_QUEUE_NAME);
+      BindToQ(queueName: AppConstants.MASTER_CUSTOMER_QUEUE_NAME,
+                eventName: AppConstants.NEW_CUSTOMER_EVENT);
       SetUpQoS();
 
       Connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
@@ -51,7 +51,7 @@ namespace eda.crmConsumer
       consumer.Received += (ch, ea) =>
       {
         // received message  
-        var content = System.Text.Encoding.UTF8.GetString(ea.Body);
+        var content = System.Text.Encoding.UTF8.GetString(ea.Body.Span);
         var orderEvent = DeserializeMessage(content);
         var routingKey = ea.RoutingKey;
 
@@ -67,7 +67,7 @@ namespace eda.crmConsumer
       consumer.Unregistered += OnConsumerUnregistered;
       consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-      Channel.BasicConsume(queue: Constants.MASTER_CUSTOMER_QUEUE_NAME, autoAck: false, consumer: consumer);
+      Channel.BasicConsume(queue: AppConstants.MASTER_CUSTOMER_QUEUE_NAME, autoAck: false, consumer: consumer);
       return Task.CompletedTask;
     }
 
