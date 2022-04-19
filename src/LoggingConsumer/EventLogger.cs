@@ -10,6 +10,7 @@ using eda.core.events;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace eda.loggingConsumer
 {
@@ -24,6 +25,13 @@ namespace eda.loggingConsumer
     private void Init()
     {
       Logger.LogInformation("[LOGGER] Init");
+
+			using(var db = new LoggingContext())
+			{
+				LogginContextInitializer.Initialize(db);
+
+
+			}
 
       var factory = new ConnectionFactory { HostName = "host.docker.internal" };
       Connection = factory.CreateConnection();
