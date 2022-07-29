@@ -8,6 +8,8 @@ services:
     environment:
       SA_PASSWORD: "21239Admin"
       ACCEPT_EULA: "Y"
+    volumes:
+      - "mssql-data:/var/opt/mssql"
 
   invoicingconsumer:
     image: ${DOCKER_REGISTRY-}invoicingconsumer
@@ -46,6 +48,9 @@ services:
       dockerfile: ShippingConsumer/Dockerfile
     depends_on:
       - db
+      
+volumes:
+  mssql-data:
 
   
 

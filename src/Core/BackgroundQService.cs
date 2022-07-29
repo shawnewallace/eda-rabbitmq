@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
@@ -27,6 +28,16 @@ namespace eda.core
 
       return factory;
     }
+
+		protected void RandomWait()
+		{
+			Random rnd = new Random();
+			var period = rnd.Next(1, 10);
+
+			Logger.LogInformation($"***** Waiting for period {period} seconds *****");
+
+			Thread.Sleep(period * 1000);
+		}
 
     protected void DeclareExchange()
     {

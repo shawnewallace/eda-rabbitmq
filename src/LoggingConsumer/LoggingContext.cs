@@ -12,14 +12,17 @@ namespace eda.loggingConsumer
 		{
 			var iler = new LogginContextInitializer();
 			iler.SeedEverything(context);
-
 		}
 
 		private void SeedEverything(LoggingContext context)
 		{
-			context.Database.EnsureDeleted();
-			context.Database.EnsureCreated();
-			context.Database.Migrate();
+			try
+			{
+				// context.Database.EnsureDeleted();
+				context.Database.EnsureCreated();
+				context.Database.Migrate();
+			}
+			catch { return; }
 		}
 	}
 
