@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using eda.core;
 using eda.core.events;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace eda.shippingConsumer
   public class ShippingConsumer : BackgroundQService<ShippingConsumer>
   {
 
-    public ShippingConsumer(ILogger<ShippingConsumer> logger) : base(logger)
+    public ShippingConsumer(ILogger<ShippingConsumer> logger, IConfiguration configuration) : base(logger, configuration)
     {
       Init();
     }
@@ -24,7 +25,7 @@ namespace eda.shippingConsumer
     {
       Logger.LogInformation("[SHIPPER] Init");
 
-      var factory = new ConnectionFactory { HostName = "host.docker.internal" };
+      var factory = GetConnectionFactory();
       Connection = factory.CreateConnection();
 
       Channel = Connection.CreateModel();

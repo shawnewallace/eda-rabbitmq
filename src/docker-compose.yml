@@ -1,6 +1,15 @@
 version: '3.4'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    # container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 8080:15672
+    volumes:
+      - "rabbitmq-data:/var/lib/rabbitmq"
+
   db:
     image: "mcr.microsoft.com/azure-sql-edge"
     ports: 
@@ -16,6 +25,9 @@ services:
     build:
       context: .
       dockerfile: InvoicingConsumer/Dockerfile
+    restart: on-failure:10
+    environment:
+      EventStreamHostName: "rabbitmq"
 
   crmconsumer:
     image: ${DOCKER_REGISTRY-}crmconsumer
@@ -24,6 +36,10 @@ services:
       dockerfile: CRMConsumer/Dockerfile
     depends_on:
       - db
+      - rabbitmq
+    restart: on-failure:10
+    environment:
+      EventStreamHostName: "rabbitmq"
 
   loggingconsumer:
     image: ${DOCKER_REGISTRY-}loggingconsumer
@@ -32,6 +48,10 @@ services:
       dockerfile: LoggingConsumer/Dockerfile
     depends_on:
       - db
+      - rabbitmq
+    restart: on-failure:10
+    environment:
+      EventStreamHostName: "rabbitmq"
 
   warehouseconsumer:
     image: ${DOCKER_REGISTRY-}warehouseconsumer
@@ -39,7 +59,10 @@ services:
       context: .
       dockerfile: WarehouseConsumer/Dockerfile
     depends_on:
-      - db
+      - rabbitmq
+    restart: on-failure:10
+    environment:
+      EventStreamHostName: "rabbitmq"
 
   shippingconsumer:
     image: ${DOCKER_REGISTRY-}shippingconsumer
@@ -47,10 +70,14 @@ services:
       context: .
       dockerfile: ShippingConsumer/Dockerfile
     depends_on:
-      - db
+      - rabbitmq
+    restart: on-failure:10
+    environment:
+      EventStreamHostName: "rabbitmq"
       
 volumes:
   mssql-data:
+  rabbitmq-data:
 
   
 

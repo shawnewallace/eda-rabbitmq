@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
@@ -10,19 +11,25 @@ namespace eda.core
   public abstract class BackgroundQService<T> : BackgroundService
   {
     protected readonly ILogger<T> Logger;
-    protected IConnection Connection;
+		protected IConfiguration Configuration { get; set; }
+		protected IConnection Connection;
     protected IModel Channel;
 
-    protected BackgroundQService(ILogger<T> logger)
+    protected BackgroundQService(ILogger<T> logger, IConfiguration configuration)
     {
       Logger = logger;
+			Configuration = configuration;
     }
 
-    protected static ConnectionFactory GetConnectionFactory()
+    protected ConnectionFactory GetConnectionFactory()
     {
+			var host = Configuration["EventStreamHostName"];
+			Logger.LogInformation($"Connecting to RabbitMQ host `{host}`.");
+
       var factory = new ConnectionFactory()
       {
-        HostName = "localhost",
+        // HostName = "localhost",
+				HostName = Configuration["EventStreamHostName"],
         //Port = 15672
       };
 

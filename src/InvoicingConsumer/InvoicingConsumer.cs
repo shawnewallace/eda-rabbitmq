@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using eda.core;
 using eda.core.events;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace eda.invoicingConsumer
   {
     private static int _ordersReceived = 0;
 
-    public InvoicingConsumer(ILogger<InvoicingConsumer> logger) : base(logger)
+    public InvoicingConsumer(ILogger<InvoicingConsumer> logger, IConfiguration configuration) : base(logger, configuration)
     {
       Init();
     }
@@ -24,7 +25,7 @@ namespace eda.invoicingConsumer
     {
       Logger.LogInformation("[INVOICER] Init");
 
-      var factory = new ConnectionFactory { HostName = "host.docker.internal" };
+      var factory = GetConnectionFactory();
       //var factory = new ConnectionFactory { HostName = "localhost" };
       Connection = factory.CreateConnection();
 

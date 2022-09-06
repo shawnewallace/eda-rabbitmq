@@ -11,12 +11,13 @@ using RabbitMQ.Client.Events;
 using eda.core;
 using eda.core.events;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace eda.warehouseConsumer
 {
   public class WarehouseConsumer : BackgroundQService<WarehouseConsumer>
   {
-    public WarehouseConsumer(ILogger<WarehouseConsumer> logger) : base(logger)
+    public WarehouseConsumer(ILogger<WarehouseConsumer> logger, IConfiguration configuration) : base(logger, configuration)
     {
       Init();
     }
@@ -25,7 +26,7 @@ namespace eda.warehouseConsumer
     {
       Logger.LogInformation("[WAREHOUSE] Init");
 
-      var factory = new ConnectionFactory { HostName = "host.docker.internal" };
+      var factory = GetConnectionFactory();
       //var factory = new ConnectionFactory { HostName = "localhost" };
       Connection = factory.CreateConnection();
 
