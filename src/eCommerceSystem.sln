@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoicingConsumer", "Invoic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventGenerator", "EventGenerator\EventGenerator.csproj", "{FBDB963A-E6E2-4DB2-B70F-A5731BC038EC}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{68E3C621-A78F-49F8-A955-000BBC154F2C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRMConsumer", "CRMConsumer\CRMConsumer.csproj", "{542A998C-F0FA-4E31-96C1-6B9640D9B11B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingConsumer", "LoggingConsumer\LoggingConsumer.csproj", "{674E5E19-7E9F-402E-8B5D-FB323D0E137C}"

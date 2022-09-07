@@ -100,12 +100,6 @@ namespace eda.loggingConsumer
       }
     }
 
-    private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }
-    private void OnConsumerUnregistered(object sender, ConsumerEventArgs e) { }
-    private void OnConsumerRegistered(object sender, ConsumerEventArgs e) { }
-    private void OnConsumerShutdown(object sender, ShutdownEventArgs e) { }
-    private void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e) { }
-
     public override void Dispose()
     {
       Channel.Close();
