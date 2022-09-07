@@ -12,25 +12,26 @@ using RabbitMQ.Client.Events;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using eda.core.data;
 
 namespace eda.loggingConsumer
 {
 
   public class EventLogger : BackgroundQService<EventLogger>
   {
-    public EventLogger(ILogger<EventLogger> logger, IConfiguration configuration ) : base(logger, configuration)
+    private readonly LoggingContext _context;
+
+    public EventLogger(LoggingContext context, ILogger<EventLogger> logger, IConfiguration configuration) : base(logger, configuration)
     {
       Init();
+      _context = context;
     }
 
     private void Init()
     {
       Logger.LogInformation("[LOGGER] Init");
 
-			using(var db = new LoggingContext())
-			{
-				LogginContextInitializer.Initialize(db);
-			}
+      LogginContextInitializer.Initialize(_context);
 
       var factory = GetConnectionFactory();
       Connection = factory.CreateConnection();
@@ -79,12 +80,14 @@ namespace eda.loggingConsumer
 
     private void LogMessage(string routingKey, string content)
     {
-      var model = new LogEntry {
+      var model = new LogEntry
+      {
         RoutingKey = routingKey,
         Content = content
       };
 
-      try{
+      try
+      {
         var order = JsonConvert.DeserializeObject<OrderIdModel>(content);
         model.OrderId = order.OrderId;
       }
@@ -93,11 +96,8 @@ namespace eda.loggingConsumer
         model.OrderId = Guid.Empty;
       }
 
-      using(var db = new LoggingContext())
-      {
-        db.LogEntries.Add(model);
-        db.SaveChanges();
-      }
+      _context.LogEntries.Add(model);
+      _context.SaveChanges();
     }
 
     public override void Dispose()

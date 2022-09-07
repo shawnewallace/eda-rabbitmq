@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eda.core.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +46,8 @@ public class Program
 		})
 		.ConfigureServices((hostContext, services) =>
 		{
-			services.AddHostedService<EventLogger>();
+      var connectionString = hostContext.Configuration["LogDatabaseConnectionString"];
+      services.AddDbContext<LoggingContext>(x => x.UseSqlServer(connectionString));
+      services.AddHostedService<EventLogger>();
 		});
 }

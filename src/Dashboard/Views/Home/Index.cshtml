@@ -1,0 +1,44 @@
+﻿@model List<eda.core.data.LogEntry>
+@using eda.core;
+
+@{
+    ViewData["Title"] = "eCommerce System Dashboard";
+}
+
+<div class="text-center">
+    <h1 class="display-4">eCommerce System Dashboard</h1>
+</div>
+
+<hr />
+
+<select>
+    <option>-- filter by event --</option>
+    @foreach (var evt in AppConstants.EventCollection.OrderBy(m => m))
+    {
+        <option>@evt</option>
+    }
+</select>
+
+<button type="button" class="btn btn-primary btn-sm">Filter</button>
+
+<table>
+    <thead>
+        <tr>
+            <th>Order Id</th>
+            <th>Event</th>
+            <th>Time</th>
+            <th>Body</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OrderId</td>
+                <td>@item.RoutingKey</td>
+                <td>@item.WhenReceived.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")</td>
+                <td>@item.Content</td>
+            </tr>
+        }
+    </tbody>
+</table>

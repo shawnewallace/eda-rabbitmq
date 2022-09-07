@@ -52,6 +52,7 @@ services:
     restart: on-failure:10
     environment:
       EventStreamHostName: "rabbitmq"
+      LogDatabaseConnectionString: "Server=db;Database=event_logger;User=sa;Password=21239Admin;"
 
   warehouseconsumer:
     image: ${DOCKER_REGISTRY-}warehouseconsumer
@@ -74,6 +75,19 @@ services:
     restart: on-failure:10
     environment:
       EventStreamHostName: "rabbitmq"
+
+  dashboard:
+    image: ${DOCKER_REGISTRY-}dashboard
+    build:
+      context: .
+      dockerfile: Dashboard/Dockerfile
+    depends_on:
+      - db
+    restart: on-failure:10
+    ports:
+      - 8181:80
+    environment:
+      LogDatabaseConnectionString: "Server=db;Database=event_logger;User=sa;Password=21239Admin;"
       
 volumes:
   mssql-data:

@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		eCommerceSystem.sln = eCommerceSystem.sln
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "Dashboard\Dashboard.csproj", "{33D3B6D0-4BE7-46D2-9786-F7552614CE57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,5 +66,9 @@ Global
 		{0C714494-A28C-42E4-BD0C-0DB65092CEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C714494-A28C-42E4-BD0C-0DB65092CEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C714494-A28C-42E4-BD0C-0DB65092CEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D3B6D0-4BE7-46D2-9786-F7552614CE57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D3B6D0-4BE7-46D2-9786-F7552614CE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D3B6D0-4BE7-46D2-9786-F7552614CE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33D3B6D0-4BE7-46D2-9786-F7552614CE57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
