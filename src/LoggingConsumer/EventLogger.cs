@@ -23,8 +23,8 @@ namespace eda.loggingConsumer
 
     public EventLogger(LoggingContext context, ILogger<EventLogger> logger, IConfiguration configuration) : base(logger, configuration)
     {
-      Init();
       _context = context;
+      Init();
     }
 
     private void Init()

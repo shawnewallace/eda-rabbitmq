@@ -19,7 +19,11 @@ public class HomeController : Controller
 
   public async Task<IActionResult> Index()
   {
-    var result = await _context.LogEntries.OrderBy(m => m.OrderId).ThenBy(m => m.WhenReceived).ToListAsync();
+    var result = 
+			await _context.LogEntries
+			              .OrderByDescending(m => m.WhenReceived)
+										.ThenBy(m => m.OrderId)
+										.ToListAsync();
 
     return View(result);
   }

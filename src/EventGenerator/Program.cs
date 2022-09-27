@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bogus;
 using eda.core;
 using eda.core.events;
 using eda.services;
@@ -61,24 +62,38 @@ namespace EventGenerator
 
     private static IOrderAccepted CreateNewSampleOrderAcceptedEvent()
     {
-      IOrderAccepted order = new OrderAcceptedEvent();
+			// Randomizer.Seed = new Random(8675309);
+			var orderItemDescription = new []{"appple", "banana", "widget", "car", "pizza"};
+			var testOrderItems = new Faker<OrderItem>()
+				.RuleFor(o => o.Description, f => f.PickRandom(orderItemDescription))
+				.RuleFor(o => o.ItemId, f => Guid.NewGuid())
+				.RuleFor(o => o.Price, f => f.Random.Double(5.00, 100.00))
+				.RuleFor(o => o.Quantity, f => f.Random.Int(1, 20));
 
-      order.CustomerId = Guid.NewGuid();
-      order.OrderId = Guid.NewGuid();
-      order.OrderItems = new List<OrderItem>
-      {
-        new OrderItem {Description = "Item One", ItemId = Guid.NewGuid(), Price = 100.21, Quantity = 4},
-        new OrderItem {Description = "Item Two", ItemId = Guid.NewGuid(), Price = 19.99, Quantity = 6},
-        new OrderItem {Description = "Item Three", ItemId = Guid.NewGuid(), Price = 5, Quantity = 1}
-      };
-      return order;
+			var testOrder = new Faker<OrderAcceptedEvent>()
+				.RuleFor(o => o.OrderId, f => Guid.NewGuid())
+				.RuleFor(o => o.CustomerId, f => Guid.NewGuid())
+				.RuleFor(o => o.OrderItems, f => testOrderItems.Generate(f.Random.Int(1, 50)));
+
+			return testOrder.Generate();
     }
 
     private static INewCustomer CreateNewSampleCustomerEvent()
     {
-      INewCustomer customer = new NewCustomerEvent();
-      customer.CustomerId = Guid.NewGuid();
-      return customer;
+			// Randomizer.Seed = new Random(8675309);
+			var testCustomer = new Faker<NewCustomerEvent>()
+				.RuleFor(o => o.CustomerId, f => Guid.NewGuid())
+				.RuleFor(o => o.FirstName, f => f.Name.FirstName())
+				.RuleFor(o => o.LastName, f => f.Name.LastName())
+				.RuleFor(o => o.EmailAddress, (f, u) => f.Internet.Email(u.FirstName, u.LastName));
+
+
+			return testCustomer.Generate();
+
+
+      // INewCustomer customer = new NewCustomerEvent();
+      // customer.CustomerId = Guid.NewGuid();
+      // return customer;
     }
   }
 }

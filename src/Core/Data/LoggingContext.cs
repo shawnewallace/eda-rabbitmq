@@ -8,13 +8,14 @@ namespace eda.core.data
   { 
     public DbSet<LogEntry> LogEntries => Set<LogEntry>();
 
-    public LoggingContext() { }
+    // public LoggingContext() { }
     public LoggingContext(DbContextOptions<LoggingContext> options) : base(options)
     { }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-      //optionsBuilder.UseSqlServer(CONNECTION_STRING);
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+		// 	optionsBuilder.UseSqlServer();
+    //   //optionsBuilder.UseSqlServer(CONNECTION_STRING);
+    // }
   }
 }
