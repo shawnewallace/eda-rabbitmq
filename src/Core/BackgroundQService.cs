@@ -12,8 +12,8 @@ namespace eda.core
   {
     protected readonly ILogger<T> Logger;
 		protected IConfiguration Configuration { get; set; }
-		protected IConnection Connection;
-    protected IModel Channel;
+		protected IConnection Connection = default!;
+    protected IModel Channel = default!;
 
     protected BackgroundQService(ILogger<T> logger, IConfiguration configuration)
     {
@@ -28,9 +28,7 @@ namespace eda.core
 
       var factory = new ConnectionFactory()
       {
-        // HostName = "localhost",
 				HostName = Configuration["EventStreamHostName"],
-        //Port = 15672
       };
 
       return factory;
@@ -72,10 +70,10 @@ namespace eda.core
       Logger.LogInformation("Done");
     }
 
-    protected void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }
-    protected void OnConsumerUnregistered(object sender, ConsumerEventArgs e) { }
-    protected void OnConsumerRegistered(object sender, ConsumerEventArgs e) { }
-    protected void OnConsumerShutdown(object sender, ShutdownEventArgs e) { }
-    protected void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e) { }
+    protected void OnConsumerConsumerCancelled(object? sender, ConsumerEventArgs e) { }
+    protected void OnConsumerUnregistered(object? sender, ConsumerEventArgs e) { }
+    protected void OnConsumerRegistered(object? sender, ConsumerEventArgs e) { }
+    protected void OnConsumerShutdown(object? sender, ShutdownEventArgs e) { }
+    protected void RabbitMQ_ConnectionShutdown(object? sender, ShutdownEventArgs e) { }
   }
 }

@@ -7,7 +7,8 @@ namespace eda.core
   public static class AppConstants
   {
     public const string EXCHANGE_NAME = "retail_system";
-    public const string LOGGING_QUEUE_NAME = "logger_q";
+    public const string DATA_SERVICE_QUEUE_NAME = "data_q";
+		public const string LOGGING_QUEUE_NAME = "logger_q";
     public const string INVOICING_QUEUE_NAME = "invoicer_q";
     public const string SHIPPING_QUEUE_NAME = "shipping_q";
     public const string WAREHOUSE_QUEUE_NAME = "warehouse_q";

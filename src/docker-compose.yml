@@ -54,6 +54,19 @@ services:
       EventStreamHostName: "rabbitmq"
       LogDatabaseConnectionString: "Server=db;Database=event_logger;User=sa;Password=21239Admin;"
 
+  dataservice:
+    image: ${DOCKER_REGISTRY-}dataservice
+    build:
+      context: .
+      dockerfile: DataService/Dockerfile
+    depends_on:
+      - db
+      - rabbitmq
+    restart: on-failure:10
+    environment:
+      EventStreamHostName: "rabbitmq"
+      LogDatabaseConnectionString: "Server=db;Database=event_logger;User=sa;Password=21239Admin;"
+
   warehouseconsumer:
     image: ${DOCKER_REGISTRY-}warehouseconsumer
     build:

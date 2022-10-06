@@ -9,6 +9,6 @@ namespace eda.services
   {
     public Guid CustomerId { get; set; }
     public Guid OrderId { get; set; }
-    public List<OrderItem> OrderItems { get; set; }
+    public List<OrderItem> OrderItems { get; set; } = default!;
   }
 }
