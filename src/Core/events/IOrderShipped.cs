@@ -1,6 +1,6 @@
 namespace eda.core.events
 {
-  public interface IOrderShipped : IHaveOrderId
+  public interface IOrderShipped : IHaveOrderId, IEvent
   {
   }
 }

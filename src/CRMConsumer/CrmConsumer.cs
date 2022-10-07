@@ -75,8 +75,12 @@ public class CrmConsumer : BackgroundQService<CrmConsumer>
 	private void ProcessEvent(INewCustomer newCustomer)
 	{
 		Logger.LogInformation("\tProcessing customer {0}...", newCustomer.CustomerId);
-		// Thread.Sleep(500);
 		RandomWait();
+
+		var message = JsonConvert.SerializeObject(newCustomer);
+		var body = System.Text.Encoding.UTF8.GetBytes(message);
+		Channel.BasicPublish(AppConstants.EXCHANGE_NAME, AppConstants.CUSTOMER_CREATED_EVENT, null, body);
+
 		Logger.LogInformation("Customer Created");
 	}
 
@@ -96,4 +100,8 @@ public class CrmConsumer : BackgroundQService<CrmConsumer>
 internal class NewCustomer : INewCustomer
 {
 	public Guid CustomerId { get; set; }
+
+	public DateTime Start { get; set; } = DateTime.UtcNow;
+	public Guid EventId { get; set; } = Guid.NewGuid();
+	public Guid CorrelationId { get; set; } = default!;
 }

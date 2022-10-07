@@ -71,6 +71,7 @@ namespace EventGenerator
 				.RuleFor(o => o.Quantity, f => f.Random.Int(1, 20));
 
 			var testOrder = new Faker<OrderAcceptedEvent>()
+				.RuleFor(o => o.CorrelationId, f => Guid.NewGuid())
 				.RuleFor(o => o.OrderId, f => Guid.NewGuid())
 				.RuleFor(o => o.CustomerId, f => Guid.NewGuid())
 				.RuleFor(o => o.OrderItems, f => testOrderItems.Generate(f.Random.Int(1, 50)));
@@ -82,6 +83,7 @@ namespace EventGenerator
     {
 			// Randomizer.Seed = new Random(8675309);
 			var testCustomer = new Faker<NewCustomerEvent>()
+				.RuleFor(o => o.CorrelationId, f => Guid.NewGuid())
 				.RuleFor(o => o.CustomerId, f => Guid.NewGuid())
 				.RuleFor(o => o.FirstName, f => f.Name.FirstName())
 				.RuleFor(o => o.LastName, f => f.Name.LastName())

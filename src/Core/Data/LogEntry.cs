@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eda.core.data
 {
-  [Table(name: "log_entries", Schema = "dbo")]
+	[Table(name: "log_entries", Schema = "dbo")]
 	public class LogEntry
 	{
 		[Key] public int Id { get; set; }
@@ -12,5 +12,6 @@ namespace eda.core.data
 		public string RoutingKey { get; set; } = "";
 		public string Content { get; set; } = "";
 		public DateTime WhenReceived { get; set; } = DateTime.UtcNow;
+		public Guid CorrelationId { get; set; }
 	}
 }

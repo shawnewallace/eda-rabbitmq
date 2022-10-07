@@ -95,7 +95,7 @@ namespace eda.warehouseConsumer
       var ready = JsonConvert.DeserializeObject<OrderReady>(message);
       Console.Write(" [>>>>>>>>>>] Received Order Ready For Shipment message '{0}'...", ready.OrderId);
       Thread.Sleep(15000);
-      IOrderShipped shipped = new OrderShipped { OrderId = ready.OrderId };
+      IOrderShipped shipped = new OrderShipped { OrderId = ready.OrderId, CorrelationId = ready.CorrelationId };
       var orderMessage = JsonConvert.SerializeObject(ready);
       var body = Encoding.UTF8.GetBytes(orderMessage);
       Channel.BasicPublish(AppConstants.EXCHANGE_NAME, AppConstants.SHIPPED_EVENT, null, body);
@@ -113,10 +113,18 @@ namespace eda.warehouseConsumer
   internal class OrderShipped : IOrderShipped
   {
     public Guid OrderId { get; set; }
+
+		public DateTime Start { get; set; } = DateTime.UtcNow;
+		public Guid EventId { get; set; } = Guid.NewGuid();
+		public Guid CorrelationId { get; set; } = default!;
   }
 
   internal class OrderReady : IOrderReadyForShipment
   {
     public Guid OrderId { get; set; }
+
+		public DateTime Start { get; set; } = DateTime.UtcNow;
+		public Guid EventId { get; set; } = Guid.NewGuid();
+		public Guid CorrelationId { get; set; } = default!;
   }
 }

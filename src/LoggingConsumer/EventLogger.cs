@@ -90,6 +90,7 @@ namespace eda.loggingConsumer
       {
         var order = JsonConvert.DeserializeObject<OrderIdModel>(content);
         model.OrderId = order.OrderId;
+				model.CorrelationId = order.CorrelationId;
       }
       catch
       {
