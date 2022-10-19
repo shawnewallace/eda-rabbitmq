@@ -4,6 +4,9 @@ using eda.core.data;
 using eda.core;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
+using Azure.Storage.Blobs;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace eda.dataService;
 
@@ -46,7 +49,7 @@ public class DataService : BackgroundQService<DataService>
 		stoppingToken.ThrowIfCancellationRequested();
 
 		var consumer = new EventingBasicConsumer(Channel);
-		consumer.Received += (ch, ea) =>
+		consumer.Received += async (ch, ea) =>
 		{
 			// received message  
 			var content = System.Text.Encoding.UTF8.GetString(ea.Body.Span);
@@ -55,6 +58,9 @@ public class DataService : BackgroundQService<DataService>
 			Logger.LogInformation($" [>>>>>>>>>>] DATASERVICE Received  '{routingKey}':'{content}'");
 
 			// LogMessage(routingKey, content); -> DO WORK
+
+			await WriteEventToBlobStorage(routingKey, content);
+
 			Channel.BasicAck(ea.DeliveryTag, false);
 		};
 
@@ -67,10 +73,41 @@ public class DataService : BackgroundQService<DataService>
 		return Task.CompletedTask;
 	}
 
+	private async Task WriteEventToBlobStorage(string eventName, string content)
+	{
+
+		// var blobStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=eventdump;AccountKey=9d9Lj4wXGks5SSViGYQt2pR3PX1YV1E4IaYmySAhdNbdKxzTtaHC9DslB4qatiR1tFAyQTo3y/nM+AStYEzAfA==;EndpointSuffix=core.windows.net";
+		// var blobStorageContainerName = "rawevents";
+		var blobStorageConnectionString = Configuration["BlobStorageConnectionString"];
+		var blobStorageContainerName = Configuration["BlobStorageContainerName"];
+
+		var evt = JsonConvert.DeserializeObject<EventWithCorrelationId>(content);
+		var correlationId = evt is null ? "correlationIdIsNull" : evt.CorrelationId.ToString();
+		var rightNowUtc = DateTime.UtcNow;
+		var blobName = $"{rightNowUtc:yyyyMMddHHmmssfff}-{eventName}-{correlationId}.json";
+
+		Logger.LogInformation($"Writing new event {eventName} to file {blobName}. CorrelationId is {correlationId}");
+
+		var container = new BlobContainerClient(blobStorageConnectionString, blobStorageContainerName);
+		var blob = container.GetBlobClient(blobName);
+
+		using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(content)))
+		{
+			await blob.UploadAsync(ms);
+		}
+	}
+
 	public override void Dispose()
 	{
 		Channel.Close();
 		Connection.Close();
 		base.Dispose();
 	}
+}
+
+internal class EventWithCorrelationId : IEvent
+{
+	public DateTime Start { get; set; }
+	public Guid EventId { get; set; }
+	public Guid CorrelationId { get; set; }
 }

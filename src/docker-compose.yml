@@ -66,6 +66,8 @@ services:
     environment:
       EventStreamHostName: "rabbitmq"
       LogDatabaseConnectionString: "Server=db;Database=event_logger;User=sa;Password=21239Admin;"
+      BlobStorageConnectionString: "DefaultEndpointsProtocol=https;AccountName=eventdump;AccountKey=9d9Lj4wXGks5SSViGYQt2pR3PX1YV1E4IaYmySAhdNbdKxzTtaHC9DslB4qatiR1tFAyQTo3y/nM+AStYEzAfA==;EndpointSuffix=core.windows.net"
+      BlobStorageContainerName: "rawevents"
 
   warehouseconsumer:
     image: ${DOCKER_REGISTRY-}warehouseconsumer
