@@ -75,9 +75,6 @@ public class DataService : BackgroundQService<DataService>
 
 	private async Task WriteEventToBlobStorage(string eventName, string content)
 	{
-
-		// var blobStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=eventdump;AccountKey=9d9Lj4wXGks5SSViGYQt2pR3PX1YV1E4IaYmySAhdNbdKxzTtaHC9DslB4qatiR1tFAyQTo3y/nM+AStYEzAfA==;EndpointSuffix=core.windows.net";
-		// var blobStorageContainerName = "rawevents";
 		var blobStorageConnectionString = Configuration["BlobStorageConnectionString"];
 		var blobStorageContainerName = Configuration["BlobStorageContainerName"];
 
@@ -103,11 +100,4 @@ public class DataService : BackgroundQService<DataService>
 		Connection.Close();
 		base.Dispose();
 	}
-}
-
-internal class EventWithCorrelationId : IEvent
-{
-	public DateTime Start { get; set; }
-	public Guid EventId { get; set; }
-	public Guid CorrelationId { get; set; }
 }

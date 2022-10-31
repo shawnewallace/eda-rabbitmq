@@ -92,7 +92,7 @@ namespace eda.shippingConsumer
     {
       var billed = JsonConvert.DeserializeObject<CustomerBilledEvent>(message);
       Logger.LogInformation(" [>>>>>>>>>>] Received Customer Billed '{0}'...", billed.OrderId);
-      Thread.Sleep(10000);
+			RandomWait();
       IOrderReadyForShipment ready = new OrderReady { OrderId = billed.OrderId };
       var orderMessage = JsonConvert.SerializeObject(billed);
       var body = Encoding.UTF8.GetBytes(orderMessage);
@@ -104,7 +104,7 @@ namespace eda.shippingConsumer
     {
       var order = JsonConvert.DeserializeObject<Order>(message);
       Logger.LogInformation(" [>>>>>>>>>>] Received Order Accepted '{0}'...", order.OrderId);
-      Thread.Sleep(500);
+			RandomWait();
       Logger.LogInformation("Processed");
     }
   }

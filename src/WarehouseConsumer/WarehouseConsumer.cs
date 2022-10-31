@@ -93,13 +93,12 @@ namespace eda.warehouseConsumer
     private void ProcessCustomerBilled(string message)
     {
       var ready = JsonConvert.DeserializeObject<OrderReady>(message);
-      Console.Write(" [>>>>>>>>>>] Received Order Ready For Shipment message '{0}'...", ready.OrderId);
-      Thread.Sleep(15000);
+      Logger.LogInformation(" [>>>>>>>>>>] Received Order Ready For Shipment message '{0}'...", ready.OrderId);
+			RandomWait();
       IOrderShipped shipped = new OrderShipped { OrderId = ready.OrderId, CorrelationId = ready.CorrelationId };
       var orderMessage = JsonConvert.SerializeObject(ready);
       var body = Encoding.UTF8.GetBytes(orderMessage);
       Channel.BasicPublish(AppConstants.EXCHANGE_NAME, AppConstants.SHIPPED_EVENT, null, body);
-      Console.WriteLine("Shipped");
     }
 
     public override void Dispose()
