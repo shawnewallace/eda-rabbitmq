@@ -1,4 +1,3 @@
-version: '3.4'
 
 services:
   rabbitmq:
@@ -94,3 +93,9 @@ volumes:
   
 
 
+
+  crmconsumer-1:
+    image: crmconsumer-1
+    build:
+      context: .
+      dockerfile: CRMConsumer/Dockerfile
