@@ -3,12 +3,15 @@ version: '3.4'
 services:
   rabbitmq:
     image: rabbitmq:3-management
-    # container_name: rabbitmq
+    hostname: rabbitmq
+    container_name: rabbitmq
     ports:
       - 5672:5672
-      - 8080:15672
+      - 15672:15672
     volumes:
-      - "rabbitmq-data:/var/lib/rabbitmq"
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      # - rabbitmq-data:/var/lib/rabbitmq
 
   db:
     image: "mcr.microsoft.com/azure-sql-edge"
@@ -18,7 +21,7 @@ services:
       SA_PASSWORD: "21239Admin"
       ACCEPT_EULA: "Y"
     volumes:
-      - "mssql-data:/var/opt/mssql"
+      - mssql-data:/var/opt/mssql
 
   invoicingconsumer:
     image: ${DOCKER_REGISTRY-}invoicingconsumer
@@ -75,9 +78,18 @@ services:
     environment:
       EventStreamHostName: "rabbitmq"
       
+  eda-seq:
+    image: datalust/seq:latest
+    container_name: runtrackr.seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
+      
 volumes:
   mssql-data:
-  rabbitmq-data:
+  # rabbitmq-data:
 
   
 
