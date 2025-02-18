@@ -56,7 +56,7 @@ public class CrmConsumer : BackgroundQService<CrmConsumer>
 			var orderEvent = DeserializeMessage(content);
 			var routingKey = ea.RoutingKey;
 
-			Logger.LogInformation($" [>>>>>>>>>>] Received '{routingKey}':'{_newCustomerReceived++}'");
+			Logger.LogInformation(" [>>>>>>>>>>] Received '{routingKey}':'{_newCustomerReceived}'", routingKey, _newCustomerReceived++);
 
 			// handle the received message  
 			ProcessEvent(orderEvent);
@@ -74,7 +74,7 @@ public class CrmConsumer : BackgroundQService<CrmConsumer>
 
 	private void ProcessEvent(INewCustomer newCustomer)
 	{
-		Logger.LogInformation("\tProcessing customer {0}...", newCustomer.CustomerId);
+		Logger.LogInformation("\tProcessing customer {customerId}...", newCustomer.CustomerId);
 		// Thread.Sleep(500);
 		RandomWait();
 		Logger.LogInformation("Customer Created");
