@@ -6,6 +6,10 @@ using eda.core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 
 namespace eda.crmConsumer;
 public class Program
@@ -16,6 +20,7 @@ public class Program
 			var host = CreateHostBuilder(args);
 			
 			host.ConfigureCustomLogging("CRMConsumer");
+			
 			await host.RunConsoleAsync();
 			return Environment.ExitCode;
 		}
@@ -28,11 +33,6 @@ public class Program
 	
 	public static IHostBuilder CreateHostBuilder(string[] args) =>
 		Host.CreateDefaultBuilder(args)
-			// .ConfigureLogging(logging =>
-			// {
-			// 	logging.ClearProviders();
-			// 	logging.AddConsole();
-			// })
 			.ConfigureAppConfiguration((hostContext, builder) => 
 			{
 				builder.AddJsonFile("appsettings.json");

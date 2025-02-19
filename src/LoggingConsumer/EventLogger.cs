@@ -18,18 +18,24 @@ namespace eda.loggingConsumer
 
   public class EventLogger : BackgroundQService<EventLogger>
   {
+    private string _connectionString;
+
     public EventLogger(ILogger<EventLogger> logger, IConfiguration configuration ) : base(logger, configuration)
     {
-      Init();
+      Init(configuration);
     }
 
-    private void Init()
+    private void Init(IConfiguration configuration)
     {
       Logger.LogInformation("[LOGGER] Init");
 
-			using(var db = new LoggingContext())
+      _connectionString = configuration["ConnectionString"];
+      
+      Logger.LogInformation("[LOGGER] ConnectionString: {ConnectionString}", _connectionString);
+      
+			using(var db = new LoggingContext(_connectionString))
 			{
-				LogginContextInitializer.Initialize(db);
+				LogginContextInitializer.Initialize(db, Logger);
 			}
 
       var factory = GetConnectionFactory();
@@ -64,8 +70,17 @@ namespace eda.loggingConsumer
 
         Logger.LogInformation($" [>>>>>>>>>>] LOGGER Received  '{routingKey}':'{content}'");
 
-        LogMessage(routingKey, content);
-        Channel.BasicAck(ea.DeliveryTag, false);
+        try
+        {
+          LogMessage(routingKey, content);
+          Channel.BasicAck(ea.DeliveryTag, false);
+        }
+        catch (Exception e)
+        {
+          Logger.LogError(" [ERROR] LOGGER Error: {ErrorMessage}", e.Message);
+          Channel.BasicNack(ea.DeliveryTag, false, true);
+        }
+
       };
 
       consumer.Shutdown += OnConsumerShutdown;
@@ -93,11 +108,9 @@ namespace eda.loggingConsumer
         model.OrderId = Guid.Empty;
       }
 
-      using(var db = new LoggingContext())
-      {
-        db.LogEntries.Add(model);
-        db.SaveChanges();
-      }
+      using var db = new LoggingContext(_connectionString);
+      db.LogEntries.Add(model);
+      db.SaveChanges();
     }
 
     private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }

@@ -54,6 +54,7 @@ services:
     restart: on-failure:10
     environment:
       EventStreamHostName: "rabbitmq"
+      ConnectionString: "Data Source=db;Initial Catalog=event_logger;User=sa;Password=21239Admin;Encrypt=False"
 
   warehouseconsumer:
     image: ${DOCKER_REGISTRY-}warehouseconsumer
@@ -89,13 +90,3 @@ services:
 volumes:
   mssql-data:
   # rabbitmq-data:
-
-  
-
-
-
-  crmconsumer-1:
-    image: crmconsumer-1
-    build:
-      context: .
-      dockerfile: CRMConsumer/Dockerfile

@@ -21,10 +21,10 @@ public static class HostBuilderExtensions
                         .AddService(serviceName));
                     otel.IncludeScopes = true;
                     otel.IncludeFormattedMessage = true;
-
+                    otel.AddConsoleExporter();
                     otel.AddOtlpExporter(a =>
                     {
-                        a.Endpoint = new Uri("http://localhost:5341/ingest/otlp/v1/logs");
+                        a.Endpoint = new Uri("http://eda-seq:5341/ingest/otlp/v1/logs");
                         a.Protocol = OtlpExportProtocol.HttpProtobuf;
                         // a.Headers = "X-Seq-ApiKey=WBPq4wjBhGll1QlL9m6r";
                     });
