@@ -19,7 +19,7 @@ namespace EventGenerator
       }
 
       int whichEvent = short.Parse(args[0]);
-      int n = short.Parse(args[1]);
+      int n = short.Parse(args[1]); 
 
       if (whichEvent == 1)
       {
