@@ -10,6 +10,15 @@ services:
     volumes:
        - rabbitmq-data:/var/lib/rabbitmq
 
+  eda-seq:
+    image: datalust/seq:latest
+    container_name: runtrackr.seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
+
   db:
     image: "mcr.microsoft.com/azure-sql-edge"
     ports: 
@@ -26,6 +35,9 @@ services:
       context: .
       dockerfile: InvoicingConsumer/Dockerfile
     restart: on-failure:10
+    depends_on:
+      - eda-seq
+      - rabbitmq
     environment:
       EventStreamHostName: "rabbitmq"
 
@@ -37,6 +49,7 @@ services:
     depends_on:
       - db
       - rabbitmq
+      - eda-seq
     restart: on-failure:10
     environment:
       EventStreamHostName: "rabbitmq"
@@ -49,6 +62,7 @@ services:
     depends_on:
       - db
       - rabbitmq
+      - eda-seq
     restart: on-failure:10
     environment:
       EventStreamHostName: "rabbitmq"
@@ -61,6 +75,7 @@ services:
       dockerfile: WarehouseConsumer/Dockerfile
     depends_on:
       - rabbitmq
+      - eda-seq
     restart: on-failure:10
     environment:
       EventStreamHostName: "rabbitmq"
@@ -72,18 +87,10 @@ services:
       dockerfile: ShippingConsumer/Dockerfile
     depends_on:
       - rabbitmq
+      - eda-seq
     restart: on-failure:10
     environment:
       EventStreamHostName: "rabbitmq"
-      
-  eda-seq:
-    image: datalust/seq:latest
-    container_name: runtrackr.seq
-    environment:
-      - ACCEPT_EULA=Y
-    ports:
-      - 5341:5341
-      - 8081:80
       
 volumes:
   mssql-data:
