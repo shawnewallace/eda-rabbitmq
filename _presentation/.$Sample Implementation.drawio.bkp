@@ -1,0 +1,45 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
+  <diagram name="Page-1" id="kpBasw974bL-0PJAs0PK">
+    <mxGraphModel dx="1614" dy="1205" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-4" value="&lt;font&gt;API Gateway&lt;/font&gt;" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16;fontFamily=Roboto;fontColor=#333333;spacing=3.8;strokeColor=#5e5e5e;strokeOpacity=100;fillOpacity=100;fillColor=#c7e8ac;strokeWidth=3;lucidId=QHfCfQ3b2NdI;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="30" y="186" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-5" value="Event Stream" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16;fontFamily=Roboto;fontColor=#ffffff;spacing=3.8;strokeColor=#5e5e5e;strokeOpacity=100;fillOpacity=100;fillColor=#0c7cba;strokeWidth=3;lucidId=QHfCi5unYH6I;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="30" y="450" width="497" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-13" value="" style="html=1;jettySize=18;whiteSpace=wrap;fontSize=13;strokeColor=#5E5E5E;strokeWidth=3;rounded=1;arcSize=12;curved=1;startArrow=block;startFill=1;endArrow=block;endFill=1;entryX=0.5;entryY=0.007;entryPerimeter=0;lucidId=QHfCcnrz68oC;edgeStyle=orthogonalEdgeStyle;fontFamily=Roboto;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;" edge="1" parent="1" source="Mw4U8TGEoECbZ-d5Dmvw-119" target="Mw4U8TGEoECbZ-d5Dmvw-94">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="580" y="630.3599999999999" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-94" value="ERP" style="overflow=block;blockSpacing=1;whiteSpace=wrap;image;aspect=fixed;html=1;points=[];align=center;verticalAlign=top;image=img/lib/mscae/Software_as_a_Service.svg;fontSize=13;spacing=0;strokeColor=#unset;rounded=1;absoluteArcSize=1;arcSize=9;fillColor=#59b4d9;strokeWidth=NaN;lucidId=-JHLj0W~sT9A;fontFamily=Roboto;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;" vertex="1" parent="1">
+          <mxGeometry x="546.5" y="680" width="67" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-115" value="" style="shape=actor;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="256.5" y="30" width="40" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-119" value="Adapter" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16;fontFamily=Roboto;fontColor=#333333;spacing=3.8;strokeColor=#5e5e5e;strokeOpacity=100;fillOpacity=100;fillColor=#f9d2de;strokeWidth=3;lucidId=QHfCTl-t~foH;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;container=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="595" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-123" value="Invoicing" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16;fontFamily=Roboto;fontColor=#333333;spacing=3.8;strokeColor=light-dark(#ff0000, #9c9c9c);strokeOpacity=100;strokeWidth=3;lucidId=QHfCoBIby5Xt;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="-100" y="595" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-124" value="Shipping" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16;fontFamily=Roboto;fontColor=#333333;spacing=3.8;strokeColor=light-dark(#ff0000, #9c9c9c);strokeOpacity=100;strokeWidth=3;lucidId=QHfCoBIby5Xt;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="595" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-125" value="Warehouse" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16;fontFamily=Roboto;fontColor=#333333;spacing=3.8;strokeColor=light-dark(#ff0000, #9c9c9c);strokeOpacity=100;strokeWidth=3;lucidId=QHfCoBIby5Xt;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="595" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-126" value="API" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16;fontFamily=Roboto;fontColor=#333333;spacing=3.8;strokeColor=light-dark(#ff0000, #9c9c9c);strokeOpacity=100;strokeWidth=3;lucidId=QHfCoBIby5Xt;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="196.5" y="310" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Mw4U8TGEoECbZ-d5Dmvw-127" value="LOGGER" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16;fontFamily=Roboto;fontColor=#333333;spacing=3.8;strokeColor=light-dark(#ff0000, #9c9c9c);strokeOpacity=100;strokeWidth=3;lucidId=QHfCoBIby5Xt;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="660" y="450" width="160" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
